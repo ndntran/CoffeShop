@@ -17,6 +17,9 @@
 		87409B7F20F810B8003F56D7 /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409B7E20F810B8003F56D7 /* Drink.swift */; };
 		87409B8120F811BB003F56D7 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409B8020F811BB003F56D7 /* Table.swift */; };
 		87409B8320F81278003F56D7 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409B8220F81278003F56D7 /* Order.swift */; };
+		87409B8520F8DAF5003F56D7 /* OrderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409B8420F8DAF5003F56D7 /* OrderDetail.swift */; };
+		87409B8720F8DC68003F56D7 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409B8620F8DC68003F56D7 /* CollectionViewController.swift */; };
+		87409B8920F8DCD4003F56D7 /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409B8820F8DCD4003F56D7 /* TableController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,9 @@
 		87409B7E20F810B8003F56D7 /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		87409B8020F811BB003F56D7 /* Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
 		87409B8220F81278003F56D7 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		87409B8420F8DAF5003F56D7 /* OrderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetail.swift; sourceTree = "<group>"; };
+		87409B8620F8DC68003F56D7 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		87409B8820F8DCD4003F56D7 /* TableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +144,9 @@
 				87409B7E20F810B8003F56D7 /* Drink.swift */,
 				87409B8020F811BB003F56D7 /* Table.swift */,
 				87409B8220F81278003F56D7 /* Order.swift */,
+				87409B8420F8DAF5003F56D7 /* OrderDetail.swift */,
+				87409B8620F8DC68003F56D7 /* CollectionViewController.swift */,
+				87409B8820F8DCD4003F56D7 /* TableController.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -279,6 +288,9 @@
 				87409B5220F80EC0003F56D7 /* ViewController.swift in Sources */,
 				87409B7F20F810B8003F56D7 /* Drink.swift in Sources */,
 				87409B8320F81278003F56D7 /* Order.swift in Sources */,
+				87409B8520F8DAF5003F56D7 /* OrderDetail.swift in Sources */,
+				87409B8920F8DCD4003F56D7 /* TableController.swift in Sources */,
+				87409B8720F8DC68003F56D7 /* CollectionViewController.swift in Sources */,
 				87409B8120F811BB003F56D7 /* Table.swift in Sources */,
 				87409B5020F80EC0003F56D7 /* AppDelegate.swift in Sources */,
 			);

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Dink{
+class Drink{
     var idDrink: String
     var name: String
     var price: Int
