@@ -26,19 +26,19 @@ enum OrderStatus: Int{
 }
 
 class Order{
-    var idOrder: String
-    var idTable: String
-    var dateOrder: String
-    var hourOrder: Int
-    var minuteOrder: Int
-    var status: OrderStatus
+    var idOrder: Int = 0
+    var idTable: String = ""
+    var dateOrder: Date
+    //var hourOrder: Int
+    //var minuteOrder: Int
+    var status: OrderStatus = .finished
     
-    init(idOrder: String, idTable: String, dateOrder: String, hourOrder: Int, minuteOrder: Int, status: OrderStatus){
+    required init(idOrder: Int, idTable: String, dateOrder: String, hourOrder: Int, minuteOrder: Int, status: OrderStatus){
         self.idOrder = idOrder
         self.idTable = idTable
         self.dateOrder = dateOrder
-        self.hourOrder = hourOrder
-        self.minuteOrder = minuteOrder
+//        self.hourOrder = hourOrder
+//        self.minuteOrder = minuteOrder
         self.status = .finished
     }
 }
