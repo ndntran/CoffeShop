@@ -8,14 +8,101 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
-
-class TableController: UITableViewController {
+class TableVC: UITableViewController {
     fileprivate let CustomIdentifiedKey = "TableCell"
+    var tableList = [Table]()
+    var tableSelected: Table?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        initServices()
+//        initData()
     }
+    
+    func initServices(){
+        let tableServices = Services()
+        if let tableURL = tableServices.buildURL(){
+            getTable(url: tableURL,
+                     success: {table in
+                        
+                        dump(table)
+                        DispatchQueue.main.async {
+//                           print(table[0].name)
+                            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                            
+                            self.tableList = table
+                            self.tableView.reloadData()
+                        }
+            }
+                ,onError: {})
+            print(tableURL)
+        }
+    }
+    
+    func getTable(url: URL, success: @escaping ([Table])-> Void, onError: @escaping () -> Void) {
+        let task = URLSession.shared.dataTask(with: url){ (data, response, error) in
+            let decoder = JSONDecoder()
+            
+            if let data = data {
+//                let strData = String(data: data, encoding: .utf8)
+//                print(strData)
+                if let respone = try? decoder.decode([Table].self, from: data){
+                    success(respone)
+                    return
+                }
+            }
+            
+        }
+        // network indicator ON
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        task.resume()
+    }
+    
+    func initData(){
+        let ban1 = Table(1,"Ban 1",TableStatus.free)
+        let ban2 = Table(2,"Ban 2",TableStatus.free)
+     
+        tableList.append(ban1)
+        tableList.append(ban2)
+        print(tableList)
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tableList.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let customcell = tableView.dequeueReusableCell(withIdentifier: CustomIdentifiedKey, for: indexPath) as! TableViewCell
+        
+        if indexPath.section == 0 {
+            customcell.lblTableName?.text = tableList[indexPath.row].name
+            
+            if tableList[indexPath.row].status == TableStatus.free{// bàn có người hiển thị màu
+                customcell.backgroundColor = UIColor.cyan
+            }else{//bàn còn lại hiển thị màu mặc định
+                customcell.backgroundColor = UIColor.white
+                }
+        }
 
+        return customcell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableSelected = tableList[indexPath.row]
+        performSegue(withIdentifier: "showTableDetail", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? TableDetailVC{
+            vc.tableDetail = tableSelected
+        }
+    }
 }
+
+
+
+

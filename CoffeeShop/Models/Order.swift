@@ -27,16 +27,23 @@ enum OrderStatus: Int{
 
 class Order{
     var idOrder: Int = 0
-    var idTable: String = ""
-    var dateOrder: Date
+    var idTable: Int = 0
+    //var dateOrder: Date
     //var hourOrder: Int
     //var minuteOrder: Int
     var status: OrderStatus = .finished
+    var orderDetail = [OrderDetail]()
     
-    required init(idOrder: Int, idTable: String, dateOrder: String, hourOrder: Int, minuteOrder: Int, status: OrderStatus){
+    enum CodingKeys: String, CodingKey{
+        case idOrder = "table_id"
+        case idTable = "table_name"
+        case status = "table_status"
+    }
+    
+    required init(idOrder: Int, idTable: Int, status: OrderStatus){
         self.idOrder = idOrder
         self.idTable = idTable
-        self.dateOrder = dateOrder
+//        self.dateOrder = dateOrder
 //        self.hourOrder = hourOrder
 //        self.minuteOrder = minuteOrder
         self.status = .finished

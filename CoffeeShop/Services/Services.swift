@@ -7,12 +7,15 @@
 //
 
 import Foundation
+
 class Services{
-    var scheme: String = "https"
-    var host: String = "api.nasa.gov"
-    var path: String = "/planetary/apod"
+    var scheme: String = "http"
+    var host: String = "hparfum.com"
+    var path: String = "/ios/public/api/table"
     var queryList: [String: String] = [:]
     var component: URLComponents = URLComponents()
+    
+//    http://hparfum.com/ios/public/api/table
     
     func buildURL() -> URL?{
         component.scheme = scheme
@@ -35,6 +38,7 @@ class Services{
     }
     
     func changePath(path: String) -> Services{
+        self.path = path
         component.path = path
         return self
     }
