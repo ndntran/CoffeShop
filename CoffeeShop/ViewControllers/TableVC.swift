@@ -44,7 +44,7 @@ class TableVC: UITableViewController {
             let decoder = JSONDecoder()
             
             if let data = data {
-//                let strData = String(data: data, encoding: .utf8)
+                let strData = String(data: data, encoding: .utf8)
 //                print(strData)
                 if let respone = try? decoder.decode([Table].self, from: data){
                     success(respone)
@@ -81,7 +81,7 @@ class TableVC: UITableViewController {
         if indexPath.section == 0 {
             customcell.lblTableName?.text = tableList[indexPath.row].name
             
-            if tableList[indexPath.row].status == TableStatus.free{// bàn có người hiển thị màu
+            if tableList[indexPath.row].status == TableStatus.free {// bàn có người hiển thị màu
                 customcell.backgroundColor = UIColor.cyan
             }else{//bàn còn lại hiển thị màu mặc định
                 customcell.backgroundColor = UIColor.white

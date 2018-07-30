@@ -54,8 +54,8 @@ class Table: Decodable{
         
         self.idTable = try! valueContainer.decode(Int.self, forKey: Table.CodingKeys.idTable)
         self.name = try! valueContainer.decode(String.self, forKey: Table.CodingKeys.name)
-//        self.status = TableStatus(rawValue: try! valueContainer.decode(Int.self, forKey: Table.CodingKeys.status))!
-        self.status = .free
+        self.status = TableStatus(rawValue: try! valueContainer.decode(Int.self, forKey: Table.CodingKeys.status))!
+//        self.status = .free
      }
 }
 
