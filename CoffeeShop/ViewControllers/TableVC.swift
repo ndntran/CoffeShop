@@ -82,7 +82,7 @@ class TableVC: UITableViewController {
             customcell.lblTableName?.text = tableList[indexPath.row].name
             
             if tableList[indexPath.row].status == TableStatus.free{// bàn có người hiển thị màu
-                customcell.backgroundColor = UIColor.cyan
+                customcell.backgroundColor = UIColor.gray
             }else{//bàn còn lại hiển thị màu mặc định
                 customcell.backgroundColor = UIColor.white
                 }
