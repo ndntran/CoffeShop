@@ -90,7 +90,7 @@ class TableDetailVC: UITableViewController {
     func getOrder(url: URL, success: @escaping (OrderResponse)-> Void, onError: @escaping () -> Void) {
         let task = URLSession.shared.dataTask(with: url){ (data, response, error) in
             let decoder = JSONDecoder()
-            print(String(data: data ?? Data(), encoding: .utf8))
+//            print(String(data: data ?? Data(), encoding: .utf8))
             if let data = data {
                 //                let strData = String(data: data, encoding: .utf8)
                 //                print(strData)
