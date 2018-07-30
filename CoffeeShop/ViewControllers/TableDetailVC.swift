@@ -15,6 +15,7 @@ class TableDetailVC: UITableViewController {
     var tableDetail : Table?
     var order: OrderResponse?
     var orderDetail: OrderDetail?
+    var newListDrink: [OrderDetail] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +35,7 @@ class TableDetailVC: UITableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,6 +45,9 @@ class TableDetailVC: UITableViewController {
         }
         if section == 1 {
             return order?.listDrink.count ?? 0
+        }
+        if section == 2 {
+            return newListDrink.count
         }
         return 0
     }
@@ -64,7 +68,13 @@ class TableDetailVC: UITableViewController {
             cell.txtDrinkAmount?.text = String(order?.listDrink[indexPath.row].amount ?? 0)
             return cell
         }
-
+        
+        if indexPath.section == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: OrderIdentifiedKey, for: indexPath) as! OrderDetailViewCell
+            cell.lblDrinkName?.text = newListDrink[indexPath.row].drinkName
+            cell.txtDrinkAmount?.text = String(newListDrink[indexPath.row].amount)
+            return cell
+        }
         return UITableViewCell()
     }
     
@@ -111,6 +121,24 @@ class TableDetailVC: UITableViewController {
     
     @IBAction func btnAddDrink(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "showDrink", sender: self)
+    }
+    
+    @IBAction func unWind(_ sender: UIStoryboardSegue) {
+//        sender.destination
+        if let drink = sender.source as? DrinkVC{
+            if let drSelected = drink.drinkSelected{
+//            if newListDrink.contains(where: { (orderDetail) -> Bool in
+//                return orderDetail.idDrink == drink.drinkSelected!.idDrink
+//            }){}
+                if let oldDrink = newListDrink.first(where: {$0.idDrink == drSelected.idDrink}){
+                    oldDrink.amount += 1
+                }else{
+                    var orderDetail = OrderDetail(idOrderDetail: 0, idDrink: drSelected.idDrink, drinkName: drSelected.name, price: drSelected.price, image: drSelected.image, amount: 1, status: .finished)
+                    newListDrink.append(orderDetail)
+                }
+                self.tableView.reloadData()
+            }
+        }
     }
     
     /*

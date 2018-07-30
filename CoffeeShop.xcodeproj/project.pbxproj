@@ -28,6 +28,7 @@
 		87EBFD65210DB3A200F28226 /* TableDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EBFD64210DB3A200F28226 /* TableDetailViewCell.swift */; };
 		87EBFD67210DC0E900F28226 /* OrderDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EBFD66210DC0E900F28226 /* OrderDetailViewCell.swift */; };
 		87EBFD69210DCDC800F28226 /* OrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EBFD68210DCDC800F28226 /* OrderResponse.swift */; };
+		87EBFD6C210F442300F28226 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EBFD6B210F442300F28226 /* Int.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		87EBFD64210DB3A200F28226 /* TableDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDetailViewCell.swift; sourceTree = "<group>"; };
 		87EBFD66210DC0E900F28226 /* OrderDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailViewCell.swift; sourceTree = "<group>"; };
 		87EBFD68210DCDC800F28226 /* OrderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResponse.swift; sourceTree = "<group>"; };
+		87EBFD6B210F442300F28226 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 		87409B4E20F80EC0003F56D7 /* CoffeeShop */ = {
 			isa = PBXGroup;
 			children = (
+				87EBFD6A210F43FB00F28226 /* Extensions */,
 				875BFD2520FCE01000DDAF57 /* Services */,
 				87409B8A20F8E99E003F56D7 /* ViewControllers */,
 				87409B7D20F80ED1003F56D7 /* Models */,
@@ -189,6 +192,14 @@
 				875BFD2620FCE03000DDAF57 /* Services.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		87EBFD6A210F43FB00F28226 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				87EBFD6B210F442300F28226 /* Int.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,6 +342,7 @@
 				87409B7F20F810B8003F56D7 /* Drink.swift in Sources */,
 				87359451210DADDA00F09E79 /* TableDetailVC.swift in Sources */,
 				87409B8320F81278003F56D7 /* Order.swift in Sources */,
+				87EBFD6C210F442300F28226 /* Int.swift in Sources */,
 				87EBFD67210DC0E900F28226 /* OrderDetailViewCell.swift in Sources */,
 				87E69AC820FAF82900ADBA9F /* DrinkVC.swift in Sources */,
 				87A588A5210D8EF80049C64B /* DrinkViewCell.swift in Sources */,

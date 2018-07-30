@@ -12,7 +12,7 @@ class Drink: Codable{
     var idDrink: Int = 0
     var name: String = ""
     var price: Int = 0
-    var image: String = ""
+    var image: String? = ""
     
     enum CodingKeys: String, CodingKey{
         case idDrink = "drink_id"
@@ -27,6 +27,6 @@ class Drink: Codable{
         self.idDrink = try! valueContainer.decode(Int.self, forKey: Drink.CodingKeys.idDrink)
         self.name = try! valueContainer.decode(String.self, forKey: Drink.CodingKeys.name)
         self.price = try! valueContainer.decode(Int.self, forKey: Drink.CodingKeys.price)
-        self.image = try! valueContainer.decode(String.self, forKey: Drink.CodingKeys.image)
+        self.image = try? valueContainer.decode(String.self, forKey: Drink.CodingKeys.image)
     }
 }

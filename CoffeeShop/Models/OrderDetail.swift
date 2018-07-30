@@ -9,14 +9,14 @@
 import Foundation
 
 enum OrderDetailStatus: Int{
-    case finished = 0
-    case ordered = 1 // đã order
-    case waitForServe = 2 // chờ phục vụ
+    case new = 0
+    case finished = 2 // đã order
+    case waitForServe = 1 // chờ phục vụ
     
     func description() -> String{
         switch self {
-        case .ordered:
-            return "Đã order"
+        case .new:
+            return "Mới"
         case .waitForServe:
             return "Chờ pha chế"
         case .finished:
@@ -45,12 +45,15 @@ class OrderDetail: Decodable{
         case status = "od_status"
     }
     
-//    init(idOrderDetail: String, idOrder: String, idDrink: String, amount: Int){
-//        self.idOrderDetail = idOrderDetail
-//        self.idOrder = idOrder
-//        self.idDrink = idDrink
-//        self.amount = amount
-//    }
+    init(idOrderDetail: Int, idDrink: Int, drinkName: String, price: Int, image: String?, amount: Int, status: OrderDetailStatus){
+        self.idOrderDetail = idOrderDetail
+        self.idDrink = idDrink
+        self.drinkName = drinkName
+        self.price = price
+        self.image = image
+        self.amount = amount
+        self.status = .finished
+    }
 //
     required init(from decoder: Decoder) throws {
         let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
