@@ -14,6 +14,7 @@ class Drink: Codable{
     var price: Int = 0
     var image: String? = ""
     
+    
     enum CodingKeys: String, CodingKey{
         case idDrink = "drink_id"
         case name = "drink_name"
