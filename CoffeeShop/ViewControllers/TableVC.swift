@@ -16,7 +16,6 @@ class TableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initServices()
-//        initData()
     }
     
     func initServices(){
@@ -58,14 +57,14 @@ class TableVC: UITableViewController {
         task.resume()
     }
     
-    func initData(){
-        let ban1 = Table(1,"Ban 1",TableStatus.free)
-        let ban2 = Table(2,"Ban 2",TableStatus.free)
-     
-        tableList.append(ban1)
-        tableList.append(ban2)
-        print(tableList)
-    }
+//    func initData(){
+//        let ban1 = Table(1,"Ban 1",TableStatus.free)
+//        let ban2 = Table(2,"Ban 2",TableStatus.free)
+//
+//        tableList.append(ban1)
+//        tableList.append(ban2)
+//        print(tableList)
+//    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -75,30 +74,39 @@ class TableVC: UITableViewController {
         return tableList.count
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Table menu"
+        }
+        
+        return ""
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let customcell = tableView.dequeueReusableCell(withIdentifier: CustomIdentifiedKey, for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CustomIdentifiedKey, for: indexPath) as! TableViewCell
         
         if indexPath.section == 0 {
-            customcell.lblTableName?.text = tableList[indexPath.row].name
+            cell.lblTableName?.text = tableList[indexPath.row].name
             
             if tableList[indexPath.row].status == TableStatus.free {// bàn có người hiển thị màu
-                customcell.backgroundColor = UIColor.cyan
+                cell.backgroundColor = UIColor.cyan
             }else{//bàn còn lại hiển thị màu mặc định
-                customcell.backgroundColor = UIColor.white
+                cell.backgroundColor = UIColor.white
                 }
         }
 
-        return customcell
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableSelected = tableList[indexPath.row]
         performSegue(withIdentifier: "showTableDetail", sender: self)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? TableDetailVC{
             vc.tableDetail = tableSelected
+            vc.navigationItem.title = tableSelected?.name
         }
     }
 }

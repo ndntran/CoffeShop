@@ -58,6 +58,7 @@ class TableDetailVC: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: CustomIdentifiedKey, for: indexPath) as! TableDetailViewCell
             cell.lblTableName?.text = tableDetail?.name
             cell.lblTableStatus?.text = tableDetail?.status.description()
+//            cell.btnOrder.addAction()
             
             return cell
         }
@@ -97,6 +98,10 @@ class TableDetailVC: UITableViewController {
         }
     }
     
+    func btnOrderTap(){
+        
+    }
+    
     func getOrder(url: URL, success: @escaping (OrderResponse)-> Void, onError: @escaping () -> Void) {
         let task = URLSession.shared.dataTask(with: url){ (data, response, error) in
             let decoder = JSONDecoder()
@@ -112,6 +117,32 @@ class TableDetailVC: UITableViewController {
                 }
                 print("Convert unsuccess")
             }
+            
+        }
+        // network indicator ON
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        task.resume()
+    }
+
+    func postOrder(url: URL, data: Data, success: @escaping (OrderResponse)-> Void, onError: @escaping () -> Void) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = data
+        
+        let task = URLSession.shared.dataTask(with: request){ (data, response, error) in
+            let decoder = JSONDecoder()
+            //            print(String(data: data ?? Data(), encoding: .utf8))
+//            if let data = data {
+//                //                let strData = String(data: data, encoding: .utf8)
+//                //                print(strData)
+//                try! decoder.decode(OrderResponse.self, from: data)
+//                if let respone = try? decoder.decode(OrderResponse.self, from: data){
+//                    dump(respone)
+//                    success(respone)
+//                    return
+//                }
+////                print("Convert unsuccess")
+//            }
             
         }
         // network indicator ON
