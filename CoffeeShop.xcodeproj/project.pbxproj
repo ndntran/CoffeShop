@@ -29,6 +29,7 @@
 		87EBFD67210DC0E900F28226 /* OrderDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EBFD66210DC0E900F28226 /* OrderDetailViewCell.swift */; };
 		87EBFD69210DCDC800F28226 /* OrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EBFD68210DCDC800F28226 /* OrderResponse.swift */; };
 		87EBFD6C210F442300F28226 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EBFD6B210F442300F28226 /* Int.swift */; };
+		87F529A42116F1D7007E231E /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F529A32116F1D7007E231E /* Date.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		87EBFD66210DC0E900F28226 /* OrderDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailViewCell.swift; sourceTree = "<group>"; };
 		87EBFD68210DCDC800F28226 /* OrderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResponse.swift; sourceTree = "<group>"; };
 		87EBFD6B210F442300F28226 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
+		87F529A32116F1D7007E231E /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				87EBFD6B210F442300F28226 /* Int.swift */,
+				87F529A32116F1D7007E231E /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				87359451210DADDA00F09E79 /* TableDetailVC.swift in Sources */,
 				87409B8320F81278003F56D7 /* Order.swift in Sources */,
 				87EBFD6C210F442300F28226 /* Int.swift in Sources */,
+				87F529A42116F1D7007E231E /* Date.swift in Sources */,
 				87EBFD67210DC0E900F28226 /* OrderDetailViewCell.swift in Sources */,
 				87E69AC820FAF82900ADBA9F /* DrinkVC.swift in Sources */,
 				87A588A5210D8EF80049C64B /* DrinkViewCell.swift in Sources */,

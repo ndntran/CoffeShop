@@ -11,5 +11,6 @@ import UIKit
 
 class OrderDetailViewCell: UITableViewCell {
     @IBOutlet weak var lblDrinkName: UILabel!
+    @IBOutlet weak var lblDrinkPrice: UILabel!
     @IBOutlet weak var txtDrinkAmount: UITextField!
 }

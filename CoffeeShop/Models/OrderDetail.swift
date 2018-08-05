@@ -8,10 +8,10 @@
 
 import Foundation
 
-enum OrderDetailStatus: Int{
+enum OrderDetailStatus: Int,Codable{
     case new = 0
-    case finished = 2 // đã order
     case waitForServe = 1 // chờ phục vụ
+    case finished = 2 // đã order
     
     func description() -> String{
         switch self {
@@ -25,7 +25,7 @@ enum OrderDetailStatus: Int{
     }
 }
 
-class OrderDetail: Decodable{
+class OrderDetail: Codable{
     var idOrderDetail: Int
 //    var idOrder: Int
     var idDrink: Int
@@ -52,7 +52,7 @@ class OrderDetail: Decodable{
         self.price = price
         self.image = image
         self.amount = amount
-        self.status = .finished
+        self.status = .waitForServe
     }
 //
     required init(from decoder: Decoder) throws {
@@ -64,6 +64,6 @@ class OrderDetail: Decodable{
         self.price = try! valueContainer.decode(Int.self, forKey: OrderDetail.CodingKeys.price)
         self.image = try? valueContainer.decode(String.self, forKey: OrderDetail.CodingKeys.image)
         self.amount = try! valueContainer.decode(Int.self, forKey: OrderDetail.CodingKeys.amount)
-        self.status = OrderDetailStatus.finished
+        self.status = OrderDetailStatus.waitForServe
     }
 }

@@ -14,6 +14,7 @@ class TableDetailVC: UITableViewController {
     
     var tableDetail : Table?
     var order: OrderResponse?
+    var orderPost: OrderResponse?
     var orderDetail: OrderDetail?
     var newListDrink: [OrderDetail] = []
     
@@ -58,7 +59,7 @@ class TableDetailVC: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: CustomIdentifiedKey, for: indexPath) as! TableDetailViewCell
             cell.lblTableName?.text = tableDetail?.name
             cell.lblTableStatus?.text = tableDetail?.status.description()
-//            cell.btnOrder.addTarget(self, action: #selector(btnOrderTap), for: UIControlEvents.touchUpInside)
+            cell.btnOrder.addTarget(self, action: #selector(btnOrderTap), for: UIControlEvents.touchUpInside)
             
             return cell
         }
@@ -66,6 +67,7 @@ class TableDetailVC: UITableViewController {
         if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderIdentifiedKey, for: indexPath) as! OrderDetailViewCell
             cell.lblDrinkName?.text = order?.listDrink[indexPath.row].drinkName
+            cell.lblDrinkPrice?.text = ((order?.listDrink[indexPath.row].price)?.toCurrencyString() ?? "") + " x "
             cell.txtDrinkAmount?.text = String(order?.listDrink[indexPath.row].amount ?? 0)
             return cell
         }
@@ -73,6 +75,7 @@ class TableDetailVC: UITableViewController {
         if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderIdentifiedKey, for: indexPath) as! OrderDetailViewCell
             cell.lblDrinkName?.text = newListDrink[indexPath.row].drinkName
+            cell.lblDrinkPrice?.text = (newListDrink[indexPath.row].price.toCurrencyString() ?? "") + " x "
             cell.txtDrinkAmount?.text = String(newListDrink[indexPath.row].amount)
             return cell
         }
@@ -139,9 +142,13 @@ class TableDetailVC: UITableViewController {
     
     @IBAction func btnOrderTap(_ sender: UIButton) {
         let orderServices = Services().changePath(path: "/ios/public/api/addDrinkToOrder")
+        let toDay = Date()
         if let orderURL = orderServices.buildURL(){
             //            dump(orderURL)
-            if let encodedData = try? JSONEncoder().encode(order){
+            orderPost = OrderResponse(idOrder: order?.idOrder, idTable: (tableDetail?.idTable)!, orderDate: toDay.toString(formatString: "yyyy-MM-dd hh:mm:ss"), orderStatus: .ordered, listDrink: newListDrink)
+            dump(orderPost)
+            let loi = try! JSONEncoder().encode(orderPost)
+            if let encodedData = try? JSONEncoder().encode(orderPost){
 //                print(String(data: encodedData, encoding: .utf8)!)
                 
                 postOrder(url: orderURL,
@@ -150,40 +157,43 @@ class TableDetailVC: UITableViewController {
                             dump(orderResponse)
                             DispatchQueue.main.async {
                                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                                
-                                self.order = orderResponse
-                                self.tableView.reloadData()
+                                self.performSegue(withIdentifier: "unWindToTable", sender: self)
                             }
                 }
                     ,onError: {})
                 //            print(orderDetailURL)
+            }else{
+                print("encode fail")
             }
+            
         }
     }
     
     func postOrder(url: URL, data: Data, success: @escaping (OrderResponse)-> Void, onError: @escaping () -> Void) {
+        let dataString = String(data: data, encoding: .utf8)
+        print(dataString)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-//        request.httpBody = data
+        request.httpBody = data
 
-        var headers = request.allHTTPHeaderFields ?? [:]
-        headers["Content-Type"] = "application/json"
-        request.allHTTPHeaderFields = headers
+//        var headers = request.allHTTPHeaderFields ?? [:]
+//        headers["Content-Type"] = "application/json"
+//        request.allHTTPHeaderFields = headers
 
         let task = URLSession.shared.dataTask(with: request){ (data, response, error) in
             let encoder = JSONEncoder()
             //            print(String(data: data ?? Data(), encoding: .utf8))
             if let data = data {
-//                let strData = String(data: data, encoding: .utf8)
-//                print(strData)
+                let strData = String(data: data, encoding: .utf8)
+                print(strData)
 //                try! encoder.encode(data)
+                
                 if let respone = try? encoder.encode(data){
-                    request.httpBody = data
                     dump(respone)
 //                    success(respone)
                     return
                 }
-                print("Convert unsuccess")
+                print("Post unsuccess")
             }
         }
         // network indicator ON
@@ -205,7 +215,7 @@ class TableDetailVC: UITableViewController {
                 if let oldDrink = newListDrink.first(where: {$0.idDrink == drSelected.idDrink}){
                     oldDrink.amount += 1
                 }else{
-                    var orderDetail = OrderDetail(idOrderDetail: 0, idDrink: drSelected.idDrink, drinkName: drSelected.name, price: drSelected.price, image: drSelected.image, amount: 1, status: .finished)
+                    var orderDetail = OrderDetail(idOrderDetail: 0, idDrink: drSelected.idDrink, drinkName: drSelected.name, price: drSelected.price, image: drSelected.image, amount: 1, status: .waitForServe)
                     newListDrink.append(orderDetail)
                 }
                 self.tableView.reloadData()
