@@ -12,5 +12,8 @@ import UIKit
 class TableDetailViewCell: UITableViewCell {
     @IBOutlet weak var lblTableName: UILabel!
     @IBOutlet weak var lblTableStatus: UILabel!
+    
+    @IBOutlet weak var btnOrder: UIButton!
+    
     //còn [tổng tiền]
 }

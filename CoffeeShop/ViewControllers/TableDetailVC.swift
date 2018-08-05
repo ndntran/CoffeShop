@@ -58,7 +58,7 @@ class TableDetailVC: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: CustomIdentifiedKey, for: indexPath) as! TableDetailViewCell
             cell.lblTableName?.text = tableDetail?.name
             cell.lblTableStatus?.text = tableDetail?.status.description()
-//            cell.btnOrder.addAction()
+//            cell.btnOrder.addTarget(self, action: #selector(btnOrderTap), for: UIControlEvents.touchUpInside)
             
             return cell
         }
@@ -77,6 +77,22 @@ class TableDetailVC: UITableViewController {
             return cell
         }
         return UITableViewCell()
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0{
+            return ""
+        }
+        
+        if section == 1{
+            return "Current drinks"
+        }
+        
+        if section == 2{
+            return "New drinks"
+        }
+        
+        return ""
     }
     
     func initServices(){
@@ -98,10 +114,6 @@ class TableDetailVC: UITableViewController {
         }
     }
     
-    func btnOrderTap(){
-        
-    }
-    
     func getOrder(url: URL, success: @escaping (OrderResponse)-> Void, onError: @escaping () -> Void) {
         let task = URLSession.shared.dataTask(with: url){ (data, response, error) in
             let decoder = JSONDecoder()
@@ -109,13 +121,13 @@ class TableDetailVC: UITableViewController {
             if let data = data {
                 //                let strData = String(data: data, encoding: .utf8)
                 //                print(strData)
-                try! decoder.decode(OrderResponse.self, from: data)
+//                try! decoder.decode(OrderResponse.self, from: data)
                 if let respone = try? decoder.decode(OrderResponse.self, from: data){
-                    dump(respone)
+//                    dump(respone)
                     success(respone)
                     return
                 }
-                print("Convert unsuccess")
+                print("Convert unsuccess!")
             }
             
         }
@@ -123,27 +135,56 @@ class TableDetailVC: UITableViewController {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         task.resume()
     }
-
+    
+    
+    @IBAction func btnOrderTap(_ sender: UIButton) {
+        let orderServices = Services().changePath(path: "/ios/public/api/addDrinkToOrder")
+        if let orderURL = orderServices.buildURL(){
+            //            dump(orderURL)
+            if let encodedData = try? JSONEncoder().encode(order){
+//                print(String(data: encodedData, encoding: .utf8)!)
+                
+                postOrder(url: orderURL,
+                          data: encodedData,
+                          success: {orderResponse in
+                            dump(orderResponse)
+                            DispatchQueue.main.async {
+                                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                                
+                                self.order = orderResponse
+                                self.tableView.reloadData()
+                            }
+                }
+                    ,onError: {})
+                //            print(orderDetailURL)
+            }
+        }
+    }
+    
     func postOrder(url: URL, data: Data, success: @escaping (OrderResponse)-> Void, onError: @escaping () -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = data
-        
+//        request.httpBody = data
+
+        var headers = request.allHTTPHeaderFields ?? [:]
+        headers["Content-Type"] = "application/json"
+        request.allHTTPHeaderFields = headers
+
         let task = URLSession.shared.dataTask(with: request){ (data, response, error) in
-            let decoder = JSONDecoder()
+            let encoder = JSONEncoder()
             //            print(String(data: data ?? Data(), encoding: .utf8))
-//            if let data = data {
-//                //                let strData = String(data: data, encoding: .utf8)
-//                //                print(strData)
-//                try! decoder.decode(OrderResponse.self, from: data)
-//                if let respone = try? decoder.decode(OrderResponse.self, from: data){
-//                    dump(respone)
+            if let data = data {
+//                let strData = String(data: data, encoding: .utf8)
+//                print(strData)
+//                try! encoder.encode(data)
+                if let respone = try? encoder.encode(data){
+                    request.httpBody = data
+                    dump(respone)
 //                    success(respone)
-//                    return
-//                }
-////                print("Convert unsuccess")
-//            }
-            
+                    return
+                }
+                print("Convert unsuccess")
+            }
         }
         // network indicator ON
         UIApplication.shared.isNetworkActivityIndicatorVisible = true

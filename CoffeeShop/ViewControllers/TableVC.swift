@@ -23,7 +23,6 @@ class TableVC: UITableViewController {
         if let tableURL = tableServices.buildURL(){
             getTable(url: tableURL,
                      success: {table in
-                        
                         dump(table)
                         DispatchQueue.main.async {
 //                           print(table[0].name)
@@ -81,6 +80,7 @@ class TableVC: UITableViewController {
         
         return ""
     }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CustomIdentifiedKey, for: indexPath) as! TableViewCell
         
@@ -88,10 +88,12 @@ class TableVC: UITableViewController {
             cell.lblTableName?.text = tableList[indexPath.row].name
             
             if tableList[indexPath.row].status == TableStatus.free {// bàn có người hiển thị màu
-                cell.backgroundColor = UIColor.cyan
+                //cell.backgroundColor = UIColor.cyan
+                cell.lblTableName.textColor = UIColor.black
             }else{//bàn còn lại hiển thị màu mặc định
-                cell.backgroundColor = UIColor.white
-                }
+//                cell.backgroundColor = UIColor.white
+                cell.lblTableName.textColor = UIColor.blue
+            }
         }
 
         return cell
