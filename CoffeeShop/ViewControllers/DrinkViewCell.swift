@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class DrinkViewCell: UITableViewCell {
-    
     @IBOutlet weak var lblDrinkName: UILabel!
     @IBOutlet weak var lblDrinkPrice: UILabel!
     

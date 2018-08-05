@@ -7,17 +7,46 @@
 //
 
 import Foundation
-class OrderResponse: Decodable {
-    var idOrder: Int
+
+enum OrderStatus: Int, Codable{
+    case finished = 0
+    case ordered = 1 // đã order
+    case waitForServe = 2 // chờ phục vụ
+    
+    func description() -> String{
+        switch self {
+        case .ordered:
+            return "Đã order"
+        case .waitForServe:
+            return "Chờ pha chế"
+        case .finished:
+            return "Đã hoàn thành"
+        }
+    }
+}
+
+class OrderResponse: Codable {
+    var idOrder: Int?
+    var idTable: Int
+    var orderDate: String
+    var orderStatus: OrderStatus
     var listDrink: [OrderDetail]
     
     enum CodingKeys: String, CodingKey{
         case idOrder = "order_id"
+        case idTable = "order_table"
+        case orderDate = "order_date"
+        case orderStatus = "order_status"
         case listDrink = "listDrink"
     }
     
-    init(){
-        fatalError()
+    init(idOrder: Int?, idTable: Int, orderDate: String, orderStatus: OrderStatus, listDrink: [OrderDetail]){
+//        fatalError()
+        self.idOrder = idOrder
+        self.idTable = idTable
+        self.orderDate = orderDate
+        self.orderStatus = orderStatus
+        self.listDrink = listDrink
     }
 }
 

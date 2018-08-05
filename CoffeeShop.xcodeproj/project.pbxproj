@@ -17,12 +17,10 @@
 		87409B7020F80EC1003F56D7 /* CoffeeShopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409B6F20F80EC1003F56D7 /* CoffeeShopUITests.swift */; };
 		87409B7F20F810B8003F56D7 /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409B7E20F810B8003F56D7 /* Drink.swift */; };
 		87409B8120F811BB003F56D7 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409B8020F811BB003F56D7 /* Table.swift */; };
-		87409B8320F81278003F56D7 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409B8220F81278003F56D7 /* Order.swift */; };
 		87409B8520F8DAF5003F56D7 /* OrderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409B8420F8DAF5003F56D7 /* OrderDetail.swift */; };
 		87409B8920F8DCD4003F56D7 /* TableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87409B8820F8DCD4003F56D7 /* TableVC.swift */; };
 		875BFD2720FCE03000DDAF57 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875BFD2620FCE03000DDAF57 /* Services.swift */; };
 		875BFD2B210C244C00DDAF57 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875BFD2A210C244C00DDAF57 /* TableViewCell.swift */; };
-		87A588A3210D8E420049C64B /* OrderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A588A2210D8E420049C64B /* OrderVC.swift */; };
 		87A588A5210D8EF80049C64B /* DrinkViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A588A4210D8EF80049C64B /* DrinkViewCell.swift */; };
 		87E69AC820FAF82900ADBA9F /* DrinkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E69AC720FAF82900ADBA9F /* DrinkVC.swift */; };
 		87EBFD65210DB3A200F28226 /* TableDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EBFD64210DB3A200F28226 /* TableDetailViewCell.swift */; };
@@ -66,12 +64,10 @@
 		87409B7120F80EC1003F56D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87409B7E20F810B8003F56D7 /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		87409B8020F811BB003F56D7 /* Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
-		87409B8220F81278003F56D7 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		87409B8420F8DAF5003F56D7 /* OrderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetail.swift; sourceTree = "<group>"; };
 		87409B8820F8DCD4003F56D7 /* TableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableVC.swift; sourceTree = "<group>"; };
 		875BFD2620FCE03000DDAF57 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		875BFD2A210C244C00DDAF57 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		87A588A2210D8E420049C64B /* OrderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderVC.swift; sourceTree = "<group>"; };
 		87A588A4210D8EF80049C64B /* DrinkViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkViewCell.swift; sourceTree = "<group>"; };
 		87E69AC720FAF82900ADBA9F /* DrinkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkVC.swift; sourceTree = "<group>"; };
 		87EBFD64210DB3A200F28226 /* TableDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDetailViewCell.swift; sourceTree = "<group>"; };
@@ -166,7 +162,6 @@
 			children = (
 				87409B7E20F810B8003F56D7 /* Drink.swift */,
 				87409B8020F811BB003F56D7 /* Table.swift */,
-				87409B8220F81278003F56D7 /* Order.swift */,
 				87409B8420F8DAF5003F56D7 /* OrderDetail.swift */,
 				87EBFD68210DCDC800F28226 /* OrderResponse.swift */,
 			);
@@ -180,7 +175,6 @@
 				87E69AC720FAF82900ADBA9F /* DrinkVC.swift */,
 				875BFD2A210C244C00DDAF57 /* TableViewCell.swift */,
 				87EBFD64210DB3A200F28226 /* TableDetailViewCell.swift */,
-				87A588A2210D8E420049C64B /* OrderVC.swift */,
 				87A588A4210D8EF80049C64B /* DrinkViewCell.swift */,
 				87359450210DADDA00F09E79 /* TableDetailVC.swift */,
 				87EBFD66210DC0E900F28226 /* OrderDetailViewCell.swift */,
@@ -344,7 +338,6 @@
 				87EBFD65210DB3A200F28226 /* TableDetailViewCell.swift in Sources */,
 				87409B7F20F810B8003F56D7 /* Drink.swift in Sources */,
 				87359451210DADDA00F09E79 /* TableDetailVC.swift in Sources */,
-				87409B8320F81278003F56D7 /* Order.swift in Sources */,
 				87EBFD6C210F442300F28226 /* Int.swift in Sources */,
 				87F529A42116F1D7007E231E /* Date.swift in Sources */,
 				87EBFD67210DC0E900F28226 /* OrderDetailViewCell.swift in Sources */,
@@ -354,7 +347,6 @@
 				87409B8520F8DAF5003F56D7 /* OrderDetail.swift in Sources */,
 				87409B8920F8DCD4003F56D7 /* TableVC.swift in Sources */,
 				87409B8120F811BB003F56D7 /* Table.swift in Sources */,
-				87A588A3210D8E420049C64B /* OrderVC.swift in Sources */,
 				875BFD2720FCE03000DDAF57 /* Services.swift in Sources */,
 				87409B5020F80EC0003F56D7 /* AppDelegate.swift in Sources */,
 			);
