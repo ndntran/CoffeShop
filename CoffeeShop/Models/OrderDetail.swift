@@ -27,7 +27,7 @@ enum OrderDetailStatus: Int,Codable{
 
 class OrderDetail: Codable{
     var idOrderDetail: Int
-//    var idOrder: Int
+    var idOrder: Int?
     var idDrink: Int
     var drinkName: String
     var price: Int
@@ -37,6 +37,7 @@ class OrderDetail: Codable{
     
     enum CodingKeys: String, CodingKey{
         case idOrderDetail = "od_id"
+        case idOrder = "od_order"
         case idDrink = "od_drink"
         case drinkName = "drink_name"
         case price = "drink_price"
@@ -45,8 +46,9 @@ class OrderDetail: Codable{
         case status = "od_status"
     }
     
-    init(idOrderDetail: Int, idDrink: Int, drinkName: String, price: Int, image: String?, amount: Int, status: OrderDetailStatus){
+    init(idOrderDetail: Int, idOrder: Int, idDrink: Int, drinkName: String, price: Int, image: String?, amount: Int, status: OrderDetailStatus){
         self.idOrderDetail = idOrderDetail
+        self.idOrder = idOrder
         self.idDrink = idDrink
         self.drinkName = drinkName
         self.price = price
@@ -54,11 +56,12 @@ class OrderDetail: Codable{
         self.amount = amount
         self.status = .waitForServe
     }
-//
+
     required init(from decoder: Decoder) throws {
         let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
         
         self.idOrderDetail = try! valueContainer.decode(Int.self, forKey: OrderDetail.CodingKeys.idOrderDetail)
+        self.idOrder = try? valueContainer.decode(Int.self, forKey: OrderDetail.CodingKeys.idOrder)
         self.idDrink = try! valueContainer.decode(Int.self, forKey: OrderDetail.CodingKeys.idDrink)
         self.drinkName = try! valueContainer.decode(String.self, forKey: OrderDetail.CodingKeys.drinkName)
         self.price = try! valueContainer.decode(Int.self, forKey: OrderDetail.CodingKeys.price)

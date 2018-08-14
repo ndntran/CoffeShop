@@ -30,14 +30,14 @@ class OrderResponse: Codable {
     var idTable: Int
     var orderDate: String
     var orderStatus: OrderStatus
-    var listDrink: [OrderDetail]
+    var listDrink: [OrderDetail]?
     
     enum CodingKeys: String, CodingKey{
         case idOrder = "order_id"
         case idTable = "order_table"
         case orderDate = "order_date"
         case orderStatus = "order_status"
-        case listDrink = "listDrink"
+        case listDrink = "drink"
     }
     
     init(idOrder: Int?, idTable: Int, orderDate: String, orderStatus: OrderStatus, listDrink: [OrderDetail]){
@@ -47,6 +47,17 @@ class OrderResponse: Codable {
         self.orderDate = orderDate
         self.orderStatus = orderStatus
         self.listDrink = listDrink
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.idOrder = try valueContainer.decode(Int.self, forKey: OrderResponse.CodingKeys.idOrder)
+        self.idTable = 0
+        self.orderDate = ""
+        self.orderStatus = .waitForServe
+        self.listDrink = try valueContainer.decode([OrderDetail].self, forKey: OrderResponse.CodingKeys.listDrink)
+        
     }
 }
 
