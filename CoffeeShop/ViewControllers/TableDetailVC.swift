@@ -11,8 +11,7 @@ import UIKit
 class TableDetailVC: UITableViewController {
     fileprivate let CustomIdentifiedKey = "TableDetailCell"
     fileprivate let OrderIdentifiedKey = "OrderDetailCell"
-//    var actIndicatorView: UIActivityIndicatorView!
-    
+
     let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     
     var tableDetail : Table?
@@ -140,6 +139,7 @@ class TableDetailVC: UITableViewController {
         return ""
     }
     
+    //chỉ tính trên current drinks
     func sumMoney()-> Int{
         var total = 0
         if oldListDrink.count>0{
@@ -148,9 +148,9 @@ class TableDetailVC: UITableViewController {
             }
         }
         
-        for item in newListDrink{
-            total += item.price * item.amount
-        }
+//        for item in newListDrink{
+//            total += item.price * item.amount
+//        }
         return total
     }
 
@@ -175,7 +175,7 @@ class TableDetailVC: UITableViewController {
     func getOrder(url: URL, success: @escaping (OrderResponse)-> Void, onError: @escaping () -> Void) {
         let task = URLSession.shared.dataTask(with: url){ (data, response, error) in
             let decoder = JSONDecoder()
-//            print(String(data: data ?? Data(), encoding: .utf8))
+            print(String(data: data ?? Data(), encoding: .utf8))
             if let data = data {
                 //let strData = String(data: data, encoding: .utf8)
                 //print(strData)
@@ -198,19 +198,19 @@ class TableDetailVC: UITableViewController {
         let toDay = Date()
         if let orderURL = service.buildURL(){
             //dump(orderURL)
-            orderPost = OrderResponse(idOrder: order?.idOrder, idTable: (tableDetail?.idTable)!, orderDate: toDay.toString(formatString: "yyyy-MM-dd hh:mm:ss"), orderStatus: .ordered, listDrink: newListDrink)
+            orderPost = OrderResponse(idOrder: order?.idOrder, idTable: (tableDetail?.idTable)!, orderDate: toDay.toString(formatString: "yyyy-MM-dd hh:mm:ss"), orderStatus: .finished, listDrink: newListDrink)
 //            dump(orderPost)
 //            let loi = try! JSONEncoder().encode(orderPost)
             
             if let encodedData = try? JSONEncoder().encode(orderPost){
-//                print(String(data: encodedData, encoding: .utf8)!)
+                print(String(data: encodedData, encoding: .utf8)!)
                 postOrder(url: orderURL,
                           data: encodedData,
                           success: {orderResponse in
                                     //dump(orderResponse)
                                     DispatchQueue.main.async {
-                                //UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                                        self.indicator.stopAnimating()
+                                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+//                                        self.indicator.stopAnimating()
 //                                self.performSegue(withIdentifier: "unWindToTable", sender: self)
 //                                        if self.actIndicatorView.isAnimating{
 //                                            self.actIndicatorView.stopAnimating()
@@ -243,30 +243,37 @@ class TableDetailVC: UITableViewController {
 
         let task = URLSession.shared.dataTask(with: request){ (data, response, error) in
             let encoder = JSONEncoder()
-            //            print(String(data: data ?? Data(), encoding: .utf8))
-            if let data = data {
-//                let strData = String(data: data, encoding: .utf8)
-//                print(strData)
-//                try! encoder.encode(data)
-                if let respone = try? encoder.encode(data){
-                    dump(respone)
-                    return
+            print(String(data: data ?? Data(), encoding: .utf8))
+//            if let data = data {
+//                //let strData = String(data: data, encoding: .utf8)
+//                //print(strData)
+//                //try! encoder.encode(data)
+//                if let respone = try? encoder.encode(data){
+//                    dump(respone)
+//                    return
+//                }
+//                print("btnOrdersTap: Post unsuccess")
+//            }
+            if error != nil {
+                print(error)
+            } else {
+                if let usableData = data {
+                    print(usableData) //JSONSerialization
                 }
-                print("btnOrdersTap: Post unsuccess")
             }
         }
         // network indicator ON
-//        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        indicator.startAnimating()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+//        indicator.startAnimating()
         task.resume()
     }
     
     @IBAction func btnBillTap(_ sender: UIButton) {
-        let service = Services().changePath(path: "/ios/public/api/addDrinkToOrder")
+        let service = Services().changePath(path: "/ios/public/api/updateOrderAndTableStatus/\(tableDetail?.idTable ?? 0)")
         if let orderURL = service.buildURL(){
-            //dump(orderURL)
+            dump(orderURL)
             if let encodedData = try? JSONEncoder().encode(order){
-                //                print(String(data: encodedData, encoding: .utf8)!)
+                //print(String(data: encodedData, encoding: .utf8)!)
                 putOrder(url: orderURL,
                          data: encodedData,
                          success: {orderResponse in
@@ -274,12 +281,11 @@ class TableDetailVC: UITableViewController {
                             DispatchQueue.main.async {
                                 //UIApplication.shared.isNetworkActivityIndicatorVisible = false
                                 //                                    self.actIndicatorView.startAnimating()
-                                //                                self.performSegue(withIdentifier: "unWindToTable", sender: self)
                                 
-                                //sum oldListDrink
-                                //if let oldListDrink = self.order?.listDrink{
                                 self.enableBill = false
                                 self.tableView.reloadData()
+                                
+                                self.performSegue(withIdentifier: "unWindTable", sender: self)
                             }
                 },
                          onError: {})
@@ -323,13 +329,14 @@ class TableDetailVC: UITableViewController {
         performSegue(withIdentifier: "showDrink", sender: self)
     }
     
-    @IBAction func unWind(_ sender: UIStoryboardSegue) {
+    @IBAction func unWindToTableDetail(_ sender: UIStoryboardSegue) {
         if let drink = sender.source as? DrinkVC{
             if let drSelected = drink.drinkSelected{
                 if let oldDrink = newListDrink.first(where: {$0.idDrink == drSelected.idDrink}){
                     oldDrink.amount += 1
                 }else{
-                    var orderDetail = OrderDetail(idOrderDetail: 0, idOrder: 0, idDrink: drSelected.idDrink, drinkName: drSelected.name, price: drSelected.price, image: drSelected.image, amount: 1, status: .waitForServe)
+                    let orderDetail = OrderDetail(idOrderDetail: 0, idOrder: (order?.idOrder) ?? 0, idDrink: drSelected.idDrink, drinkName: drSelected.name, price: drSelected.price, image: drSelected.image, amount: 1, status: .finished)
+                    
                     newListDrink.append(orderDetail)
                 }
                 self.tableView.reloadData()

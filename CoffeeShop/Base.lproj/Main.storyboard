@@ -214,7 +214,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="0Oi-yB-4bv" kind="show" identifier="showDrink" id="PmK-ky-C42"/>
-                        <segue destination="xiq-4x-ejI" kind="unwind" identifier="unWindToTable" unwindAction="unWindToTable:" id="vmK-RB-wPz"/>
+                        <segue destination="xiq-4x-ejI" kind="unwind" identifier="unWindTable" unwindAction="unWindToTable:" id="vmK-RB-wPz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q1x-tu-8JH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -274,7 +274,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="bxM-N1-xec" kind="unwind" identifier="unWindTableDetail" unwindAction="unWind:" id="aQQ-BU-HGh"/>
+                        <segue destination="bxM-N1-xec" kind="unwind" identifier="unWindTableDetail" unwindAction="unWindToTableDetail:" id="aQQ-BU-HGh"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v7J-My-Vzi" userLabel="First Responder" sceneMemberID="firstResponder"/>

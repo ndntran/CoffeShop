@@ -9,16 +9,21 @@
 import Foundation
 
 enum OrderStatus: Int, Codable{
-    case finished = 0
-    case ordered = 1 // đã order
-    case waitForServe = 2 // chờ phục vụ
+    case new = 0
+    case finished = 1
+//    case ordered = 1 // đã order
+//    case waitForServe = 2 // chờ phục vụ
     
     func description() -> String{
         switch self {
-        case .ordered:
-            return "Đã order"
-        case .waitForServe:
-            return "Chờ pha chế"
+//        case .ordered:
+//            return "Đã order"
+//        case .waitForServe:
+//            return "Chờ pha chế"
+            
+        case .new:
+            return "Mới"
+            
         case .finished:
             return "Đã hoàn thành"
         }
@@ -55,9 +60,8 @@ class OrderResponse: Codable {
         self.idOrder = try valueContainer.decode(Int.self, forKey: OrderResponse.CodingKeys.idOrder)
         self.idTable = 0
         self.orderDate = ""
-        self.orderStatus = .waitForServe
+        self.orderStatus = .finished
         self.listDrink = try valueContainer.decode([OrderDetail].self, forKey: OrderResponse.CodingKeys.listDrink)
-        
     }
 }
 
