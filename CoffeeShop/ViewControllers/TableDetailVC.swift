@@ -34,7 +34,7 @@ class TableDetailVC: UITableViewController {
         indicator.hidesWhenStopped = true
         view.addSubview(indicator)
         
-        showData()
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -43,9 +43,10 @@ class TableDetailVC: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        <#code#>
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        showData()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -176,7 +177,7 @@ class TableDetailVC: UITableViewController {
                         DispatchQueue.main.async {
                             UIApplication.shared.isNetworkActivityIndicatorVisible = false
                             self.order = orderResponse
-                            print(self.order?.idOrder)
+                            //(self.order?.idOrder)
                             self.tableView.reloadData() // refresh view
                             }
                         }
@@ -223,8 +224,8 @@ class TableDetailVC: UITableViewController {
                           success: {orderResponse in
                                     //dump(orderResponse)
                                     DispatchQueue.main.async {
-                                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-//                                        self.indicator.stopAnimating()
+                                //UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                                        self.indicator.stopAnimating()
 //                                self.performSegue(withIdentifier: "unWindToTable", sender: self)
 //                                        if self.actIndicatorView.isAnimating{
 //                                            self.actIndicatorView.stopAnimating()
@@ -238,6 +239,7 @@ class TableDetailVC: UITableViewController {
 //                                            self.order?.idOrder = orderResponse.idOrder
 //                                        }
                                         
+                                        self.tableDetail?.status = .noFree
                                         self.newListDrink = []
                                         self.showData()
                                         
@@ -293,8 +295,8 @@ class TableDetailVC: UITableViewController {
             onError()
         }
         // network indicator ON
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-//        indicator.startAnimating()
+        //UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        indicator.startAnimating()
         task.resume()
     }
     
