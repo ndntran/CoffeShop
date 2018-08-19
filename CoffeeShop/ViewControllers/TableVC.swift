@@ -15,6 +15,11 @@ class TableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //initServices()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         initServices()
     }
     
@@ -114,7 +119,7 @@ class TableVC: UITableViewController {
     
     @IBAction func unWindToTable(_ sender: UIStoryboardSegue) {
 
-        }
+    }
 }
 
 

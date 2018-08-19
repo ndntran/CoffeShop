@@ -161,8 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				87409B7E20F810B8003F56D7 /* Drink.swift */,
-				87409B8020F811BB003F56D7 /* Table.swift */,
 				87409B8420F8DAF5003F56D7 /* OrderDetail.swift */,
+				87409B8020F811BB003F56D7 /* Table.swift */,
 				87EBFD68210DCDC800F28226 /* OrderResponse.swift */,
 			);
 			path = Models;

@@ -57,11 +57,11 @@ class OrderResponse: Codable {
     required init(from decoder: Decoder) throws {
         let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.idOrder = try valueContainer.decode(Int.self, forKey: OrderResponse.CodingKeys.idOrder)
+        self.idOrder = try? valueContainer.decode(Int.self, forKey: OrderResponse.CodingKeys.idOrder)
         self.idTable = 0
         self.orderDate = ""
         self.orderStatus = .finished
-        self.listDrink = try valueContainer.decode([OrderDetail].self, forKey: OrderResponse.CodingKeys.listDrink)
+        self.listDrink = try? valueContainer.decode([OrderDetail].self, forKey: OrderResponse.CodingKeys.listDrink)
     }
 }
 

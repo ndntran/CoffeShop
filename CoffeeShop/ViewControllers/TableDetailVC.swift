@@ -68,13 +68,21 @@ class TableDetailVC: UITableViewController {
                 oldListDrink = order!.listDrink!
                 self.enableBill = true
             }
+            else{
+                self.enableBill = false
+            }
             
             //return order?.listDrink.count ?? 0
             return oldListDrink.count
         }
+        
         if section == 2 {
             if newListDrink.count > 0 {
                 self.enableOrder = true
+            }
+            else
+            {
+                self.enableOrder = false
             }
             
             return newListDrink.count
@@ -164,10 +172,11 @@ class TableDetailVC: UITableViewController {
             //dump(orderURL)
             getOrder(url: orderURL,
                      success: {orderResponse in
-                        //dump(orderResponse)
+                        dump(orderResponse)
                         DispatchQueue.main.async {
                             UIApplication.shared.isNetworkActivityIndicatorVisible = false
                             self.order = orderResponse
+                            print(self.order?.idOrder)
                             self.tableView.reloadData() // refresh view
                             }
                         }
@@ -228,11 +237,15 @@ class TableDetailVC: UITableViewController {
 //                                        if self.order?.idOrder == nil{
 //                                            self.order?.idOrder = orderResponse.idOrder
 //                                        }
+                                        
+                                        self.newListDrink = []
                                         self.showData()
+                                        
 //                                        self.tableView.reloadData()
                                     }
                                     },
                           onError: {
+                            print("OnError")
                             
                 })
                 //print(orderDetailURL)
@@ -254,18 +267,21 @@ class TableDetailVC: UITableViewController {
         request.allHTTPHeaderFields = headers
 
         let task = URLSession.shared.dataTask(with: request){ (data, response, error) in
-            //let encoder = JSONEncoder()
+            let decoder = JSONDecoder()
             print(String(data: data ?? Data(), encoding: .utf8))
-//            if let data = data {
-//                //let strData = String(data: data, encoding: .utf8)
-//                //print(strData)
-//                //try! encoder.encode(data)
-//                if let respone = try? encoder.encode(data){
-//                    dump(respone)
-//                    return
-//                }
-//                print("btnOrdersTap: Post unsuccess")
-//            }
+            if let data = data {
+                //let strData = String(data: data, encoding: .utf8)
+                //print(strData)
+                //try! encoder.encode(data)
+                let respone = try! decoder.decode(OrderResponse.self, from: data)
+                if let respone = try? decoder.decode(OrderResponse.self, from: data){
+                    success(respone)
+                    return
+                }
+                
+                print("btnOrdersTap: Post unsuccess")
+            }
+            
             if error != nil {
                 dump(error)
             } else {
@@ -273,6 +289,8 @@ class TableDetailVC: UITableViewController {
                     print(usableData) //JSONSerialization
                 }
             }
+            
+            onError()
         }
         // network indicator ON
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -283,19 +301,19 @@ class TableDetailVC: UITableViewController {
     @IBAction func btnBillTap(_ sender: UIButton) {
         let service = Services().changePath(path: "/ios/public/api/updateOrderAndTableStatus/\(tableDetail?.idTable ?? 0)")
         if let orderURL = service.buildURL(){
-            dump(orderURL)
+            //dump(orderURL)
             if let encodedData = try? JSONEncoder().encode(order){
                 //print(String(data: encodedData, encoding: .utf8)!)
                 putOrder(url: orderURL,
                          data: encodedData,
-                         success: {orderResponse in
+                         success: {
                             //dump(orderResponse)
                             DispatchQueue.main.async {
                                 //UIApplication.shared.isNetworkActivityIndicatorVisible = false
                                 //                                    self.actIndicatorView.startAnimating()
                                 
-                                self.enableBill = false
-                                self.tableView.reloadData()
+                                //self.enableBill = false
+                                //self.tableView.reloadData()
                                 
                                 self.performSegue(withIdentifier: "unWindTable", sender: self)
                             }
@@ -308,7 +326,7 @@ class TableDetailVC: UITableViewController {
         }
     }
     
-    func putOrder(url: URL, data: Data, success: @escaping (OrderResponse)-> Void, onError: @escaping () -> Void) {
+    func putOrder(url: URL, data: Data, success: @escaping ()-> Void, onError: @escaping () -> Void) {
         //        let dataString = String(data: data, encoding: .utf8)
         //        print(dataString)
         var request = URLRequest(url: url)
@@ -320,19 +338,20 @@ class TableDetailVC: UITableViewController {
         request.allHTTPHeaderFields = headers
         
         let task = URLSession.shared.dataTask(with: request){ (data, response, error) in
-            let encoder = JSONEncoder()
-            //            print(String(data: data ?? Data(), encoding: .utf8))
-            if let data = data {
-                //                let strData = String(data: data, encoding: .utf8)
-                //                print(strData)
-                //                try! encoder.encode(data)
-                if let respone = try? encoder.encode(data){
-                    dump(respone)
-                    //                    success(respone)
-                    return
-                }
-                print("btnBillTap: Post unsuccess")
-            }
+            success()
+//            let decoder = JSONDecoder()
+//            print(String(data: data ?? Data(), encoding: .utf8))
+//            if let data = data {
+//                //                let strData = String(data: data, encoding: .utf8)
+//                //                print(strData)
+//                //                try! encoder.encode(data)
+//                let respone = try! decoder.decode(OrderResponse.self, from: data)
+//                if let respone = try? decoder.decode(OrderResponse.self, from: data){
+//                    success(respone)
+//                    return
+//                }
+//                print("btnBillTap: Post unsuccess")
+//            }
         }
         task.resume()
     }
