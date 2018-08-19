@@ -42,7 +42,11 @@ class TableDetailVC: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        <#code#>
+//    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -175,7 +179,7 @@ class TableDetailVC: UITableViewController {
     func getOrder(url: URL, success: @escaping (OrderResponse)-> Void, onError: @escaping () -> Void) {
         let task = URLSession.shared.dataTask(with: url){ (data, response, error) in
             let decoder = JSONDecoder()
-            print(String(data: data ?? Data(), encoding: .utf8))
+            //print(String(data: data ?? Data(), encoding: .utf8))
             if let data = data {
                 //let strData = String(data: data, encoding: .utf8)
                 //print(strData)
@@ -199,7 +203,8 @@ class TableDetailVC: UITableViewController {
         if let orderURL = service.buildURL(){
             //dump(orderURL)
             orderPost = OrderResponse(idOrder: order?.idOrder, idTable: (tableDetail?.idTable)!, orderDate: toDay.toString(formatString: "yyyy-MM-dd hh:mm:ss"), orderStatus: .finished, listDrink: newListDrink)
-//            dump(orderPost)
+            //print(orderPost?.idOrder!)
+            //dump(orderPost)
 //            let loi = try! JSONEncoder().encode(orderPost)
             
             if let encodedData = try? JSONEncoder().encode(orderPost){
@@ -217,12 +222,19 @@ class TableDetailVC: UITableViewController {
 //                                        }
                                         
                                         //sum oldListDrink
-                                        //if let oldListDrink = self.order?.listDrink{
-                                        self.enableOrder = false
-                                        self.tableView.reloadData()
+                                        //if let oldListDrink = self.order?.listDrink{/..
+                                        //self.enableOrder = false
+                                        
+//                                        if self.order?.idOrder == nil{
+//                                            self.order?.idOrder = orderResponse.idOrder
+//                                        }
+                                        self.showData()
+//                                        self.tableView.reloadData()
                                     }
                                     },
-                          onError: {})
+                          onError: {
+                            
+                })
                 //print(orderDetailURL)
             }else{
                 print("btnOrderTap: Encode fail")
@@ -242,7 +254,7 @@ class TableDetailVC: UITableViewController {
         request.allHTTPHeaderFields = headers
 
         let task = URLSession.shared.dataTask(with: request){ (data, response, error) in
-            let encoder = JSONEncoder()
+            //let encoder = JSONEncoder()
             print(String(data: data ?? Data(), encoding: .utf8))
 //            if let data = data {
 //                //let strData = String(data: data, encoding: .utf8)
@@ -255,7 +267,7 @@ class TableDetailVC: UITableViewController {
 //                print("btnOrdersTap: Post unsuccess")
 //            }
             if error != nil {
-                print(error)
+                dump(error)
             } else {
                 if let usableData = data {
                     print(usableData) //JSONSerialization
@@ -338,6 +350,7 @@ class TableDetailVC: UITableViewController {
                     let orderDetail = OrderDetail(idOrderDetail: 0, idOrder: (order?.idOrder) ?? 0, idDrink: drSelected.idDrink, drinkName: drSelected.name, price: drSelected.price, image: drSelected.image, amount: 1, status: .finished)
                     
                     newListDrink.append(orderDetail)
+                    print(orderDetail.idOrder!)
                 }
                 self.tableView.reloadData()
             }
